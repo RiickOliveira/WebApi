@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+/* using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using TodoApi.Models;
@@ -9,7 +9,7 @@ solicitações. Os controladores agrupam ações semelhantes de forma lógica.
 Essa agregação de ações permite que conjuntos de regras comuns, como roteamento, 
 cache e autorização, sejam aplicados em conjunto.
  As solicitações são mapeadas para ações por meio de roteamento.*/
-
+/*
 namespace TodoApi.Controllers{
 
     [Route("api/[controller]")]
@@ -29,7 +29,7 @@ namespace TodoApi.Controllers{
         /*O CODIGO ACIMA Define uma classe de controlador de API sem métodos.
         Cria um novo item de Tarefas pendentes quando TodoItems está vazio. 
          Você não poderá excluir todos os itens de Tarefas pendentes 
-        porque o construtor cria um novo se TodoItems estiver vazio.*/
+        porque o construtor cria um novo se TodoItems estiver vazio.
         
         [HttpGet]
         public ActionResult<RetornoView<TodoItem>> GetAll(){
@@ -85,4 +85,4 @@ namespace TodoApi.Controllers{
 
 
 }
-
+*/

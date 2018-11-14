@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using TodoApi.Models;
+using TodoApi.Repositorio;
 
 
 namespace TodoApi.Controllers{
@@ -9,22 +10,22 @@ namespace TodoApi.Controllers{
     [Route("api/[controller]")]
     [ApiController]
 
-    public class CategoriaController : ControllerBase {
-        private readonly TodoContext _context;
-
-        public CategoriaController(TodoContext context){
-            _context = context;
+    public class CategoriaController : Controller {
+       private readonly ICategoriaRepositorio _categoriaRepositorio;
+        public CategoriaController(ICategoriaRepositorio categRepo)
+        {   
+            _categoriaRepositorio = categRepo;
         }
 
         [HttpGet]
         public ActionResult<RetornoView<Categoria>> GetAll(){
-            var resultado = new RetornoView<Categoria>(){dados = _context.Categorias.ToList()}; 
+            var resultado = new RetornoView<Categoria>(){dados = _categoriaRepositorio.GetAll()}; 
         return resultado;
         }   
 
         [HttpGet("{Id}")]
-        public ActionResult<Categoria> GetById(long Id){
-            var itens = _context.Categorias.Find(Id);
+        public ActionResult<Categoria> GetById(int Id){
+            var itens = _categoriaRepositorio.Find(Id);
             if(itens == null){
                 return NotFound();
             }
@@ -32,36 +33,41 @@ namespace TodoApi.Controllers{
         }
          
         [HttpPost]
-        public IActionResult Create(Categoria categorias){
-            _context.Categorias.Add(categorias);
-            _context.SaveChanges();
-
-            return CreatedAtRoute("GetTodo", new {id = categorias.Id}, categorias);
-        }    
+        public ActionResult<RetornoView<Categoria>> Create([FromBody] Categoria categoria){
+            if (categoria == null){
+                return BadRequest();
+            }
+            _categoriaRepositorio.Add(categoria);
+            var result = new RetornoView<Categoria>(){dado=categoria,sucesso = true};
+            return result;
+            //return CreatedAtRoute("GetUsuario", new {id=usuario.UsuarioId}, usuario);
+        }
 
          [HttpPut("{Id}")]
-        public IActionResult Update(long Id, Categoria categoria){
-            var todo = _context.Categorias.Find(Id);
+         public ActionResult<RetornoView<Categoria>> Update(int Id, Categoria categoria){
+            var todo = _categoriaRepositorio.Find(Id);
             if (todo == null){
                 return NotFound();
             }
             
             todo.Descricao = categoria.Descricao;
 
-            _context.Categorias.Update(todo);
-            _context.SaveChanges();
-            return NoContent();
+           _categoriaRepositorio.Update(todo);
+           var resultado = new RetornoView<Categoria>(){sucesso = true};
+            return resultado;
+           
+          
         }
 
-        [HttpDelete("{Id}")]
-        public IActionResult Delete(long Id){
-            var todo = _context.Categorias.Find(Id);
-            if (todo == null){
+        [HttpDelete("{id}")]
+        public ActionResult<RetornoView<Categoria>> Delete(int id){
+            var usuario = _categoriaRepositorio.Find(id);
+            if(usuario==null){
                 return NotFound();
             }
-            _context.Categorias.Remove(todo);
-            _context.SaveChanges();
-            return NoContent();
-        } 
+            _categoriaRepositorio.Remove(id);
+            var result = new RetornoView<Categoria>(){sucesso = true};
+            return result;
+        }
     }
 }

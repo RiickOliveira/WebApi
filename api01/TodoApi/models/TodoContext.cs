@@ -9,10 +9,10 @@ namespace TodoApi.Models
         {
         }
 
-        public DbSet<TodoItem> TodoItems { get; set; }
-        public DbSet<Pessoa> Pessoas{get; set;}
-        public DbSet<Categoria> Categorias{get; set;}
-        public DbSet<ReceitaDespesa> ReceitasDespesas{get; set;}
+        //public DbSet<TodoItem> TodoItems { get; set; }
+        public DbSet<Pessoa> Pessoa{get; set;}
+        public DbSet<Categoria> Categoria{get; set;}
+        public DbSet<ReceitaDespesa> ReceitaDespesa{get; set;}
        
        
     }

@@ -5,7 +5,8 @@ namespace TodoApi.Controllers
     public class RetornoView<T>  where T: class
     {
         public  T dado {get; set;}
-        public  List<T> dados {get; set;}
+        public  IEnumerable<T> dados {get; set;}
+        public bool sucesso {get; set;} 
     }
 
 
